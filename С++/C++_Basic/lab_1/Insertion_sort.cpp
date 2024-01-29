@@ -19,10 +19,8 @@ void insertion_sort(std::vector<int>& arr) {
 
 int main() {
     std::vector<int> arr = {10, 3, 5, 4, 1};
-
     insertion_sort(arr);
-
-    std::cout << "Sorted array: ";
+    std::cout << "Сортированный массив: ";
     for (int i = 0; i < arr.size(); i++) {
         std::cout << arr[i] << " ";
     }

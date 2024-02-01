@@ -34,7 +34,7 @@ class Fraction
     }
 
     //Нахождения наибольшего общего делителя
-    public static int GCD(int a, int b) 
+    public static int find_del(int a, int b) 
     {
         while (b != 0)
         {
@@ -48,9 +48,9 @@ class Fraction
     //Сокращение дроби
     public void Simplify()
     {
-        int gcd = GCD(numerator, denominator);
-        numerator /= gcd;
-        denominator /= gcd;
+        int del = find_del(numerator, denominator);
+        numerator /= del;
+        denominator /= del;
     }
 
     // Получение десятичной дроб числа
@@ -109,7 +109,7 @@ class Program
     static void Main(string[] args)
     {
         Fraction fraction1 = new (1, 2);
-        Fraction fraction2 = new(3, 4);
+        Fraction fraction2 = new (3, 4);
 
         Fraction sum = fraction1.Add(fraction2);
         Fraction difference = fraction1.Subtract(fraction2);

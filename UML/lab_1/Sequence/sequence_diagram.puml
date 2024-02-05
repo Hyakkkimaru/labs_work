@@ -1,0 +1,39 @@
+@startuml
+
+participant "Пользователь" as User
+participant "Диск" as Record_Information
+participant "Проверка свободного места" as Check_Free_Space
+participant "Выполнение записи на диск" as Perform_Recording
+participant "Выполнение верификации" as Perform_Verification
+participant "Запись информации успешна" as Write_Data_Successfully
+participant "Ошибка записи на диск" as Write_Error
+participant "Ошибка верификации записи" as Verification_Error
+
+User -> Record_Information : Записать информацию на диск()
+Record_Information -> Check_Free_Space : Проверить свободное место на диске()
+alt Свободного места на диске достаточно
+    Check_Free_Space -> Perform_Recording : Выполнить запись на диск()
+    Perform_Recording -> Perform_Verification : Верифицировать запись на диск()
+    Perform_Verification -> Write_Data_Successfully : Запись информации успешна()
+    Write_Data_Successfully --> Perform_Verification : Завершить процесс()
+else Свободного места на диске недостаточно
+    Check_Free_Space -> Write_Error : Ошибка записи на диск()
+    Write_Error --> Perform_Recording : Выполнить запись после финализации()
+    Perform_Recording -> Perform_Verification : Верифицировать запись()
+    Perform_Verification -> Write_Data_Successfully : Запись информации успешна()
+    Write_Data_Successfully --> Perform_Verification : Завершить процесс()
+else Диск поврежден
+    Check_Free_Space -> Verification_Error : Ошибка записи на диск()
+    Verification_Error --> Perform_Recording : Выполнить запись после финализации()
+    Perform_Recording -> Perform_Verification : Верифицировать запись()
+    Perform_Verification -> Write_Data_Successfully : Запись информации успешна()
+    Write_Data_Successfully --> Perform_Verification : Завершить процесс()
+else Запись выполнена, но есть ошибки верификации
+    Perform_Verification -> Verification_Error : Ошибка верификации записи на диск()
+    Verification_Error --> Perform_Recording : Выполнить запись после финализации()
+    Perform_Recording -> Perform_Verification : Верифицировать запись на диск()
+    Perform_Verification -> Write_Data_Successfully : Записать информацию успешно()
+    Write_Data_Successfully --> Perform_Verification : Завершить процесс()
+end
+
+@enduml

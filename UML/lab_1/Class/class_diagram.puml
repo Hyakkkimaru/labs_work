@@ -1,0 +1,50 @@
+@startuml
+title Процесс записи информации на DVD-диск
+
+class User {
+    +ChooseFilesToWrite()
+}
+
+class DVDRecorder {
+  - discType
+  - recordingSpeed
+  + insertDisc()
+  + ejectDisc()
+  + startRecording()
+  + stopRecording()
+}
+
+class Disk {
+  - freeSpace
+  + getFreeSpace()
+  + writeData(data)
+  + finalizeDisk()
+  + verifyData()
+  + isDamaged()
+}
+
+class Exception {
+    +ExceptionHandling()
+}
+
+class Write_Error {
+    +Get_Error()
+}
+
+class Verification_Error {
+    +Get_Error()
+}
+
+class Storage_Error {
+    +Get_Error()
+}
+
+User --> DVDRecorder: Interaction
+DVDRecorder --> User: Interaction
+DVDRecorder ..> Disk: Writes on
+DVDRecorder ..> Exception: Check
+Exception --> Write_Error: Throw
+Exception --> Verification_Error: Throw
+Exception --> Storage_Error: Throw
+
+@enduml

@@ -1,15 +1,18 @@
 using System;
 
+///<summary> This is custom exception class for issues related to the quantity of months </summary>
 public class QuantityException : Exception
 {
     public QuantityException(string message) : base(message) { }
 }
 
+///<summary> TThis is custom exception class for issues related to the deposit </summary>
 public class DepositException : Exception
 {
     public DepositException(string message) : base(message) { }
 }
 
+///<summary> The Bank class represents a bank and has a name property </summary>
 public class Bank
 {
     private string name;
@@ -21,6 +24,7 @@ public class Bank
     }
 }
 
+/// <summary> The Branch class represents a branch of a bank system and has a name and sum of all branches properties </summary>
 public class Branch
 {
     private string name;
@@ -39,6 +43,7 @@ public class Branch
     }
 }
 
+///<summary> The Deposit class represents a deposit in a bank system and has a fullname and sum of all deposit properties </summary>
 public class Deposit
 {
     private string fullName;
@@ -75,6 +80,7 @@ public class Deposit
     }
 }
 
+///<summary> The LongTermDeposit class represents a long-term deposit and inherits from the Deposit class </summary>
 public class LongTermDeposit : Deposit
 {
     public new double Sum_Deposit(int months)
@@ -97,6 +103,7 @@ public class LongTermDeposit : Deposit
     }
 }
 
+///<summary> The DepositUntilDemand class represents deposit that can be withdrawn on demand and inherits from the Deposit class </summary>
 public class DepositUntilDemand : Deposit
 {
     public double CalculateDepositAmount(int months)
@@ -119,6 +126,7 @@ public class DepositUntilDemand : Deposit
     }
 }
 
+///<summary> The Program class contains the entry point for the application </summary>
 public class Program
 {
     public static void Main()

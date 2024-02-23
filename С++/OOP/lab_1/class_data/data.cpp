@@ -10,7 +10,7 @@ private:
 
 public:
     /// Constructor with parameters
-    Date(int d = 0, int m= 0, int y = 0) : day(d), month(m), year(y) { }
+    Date(int d, int m, int y) : day(d), month(m), year(y) { }
 
     bool isValid() const {
         if (day < 1 || day > 31 || month < 1 || month > 12 || year < 0) {
@@ -20,7 +20,7 @@ public:
     }
 
     /// Getters and setters
-    int getDay() const {
+    int getDay() {
         return day;
     }
 
@@ -28,7 +28,7 @@ public:
         day = d;
     }
 
-    int getMonth() const {
+    int getMonth() {
         return month;
     }
 
@@ -36,7 +36,7 @@ public:
         month = m;
     }
 
-    int getYear() const {
+    int getYear() {
         return year;
     }
 
@@ -78,7 +78,7 @@ public:
     }
 
     /// Operators
-    Date operator+(const Date& other) const {
+    Date operator+(const Date& other) {
         int newDay = day + other.day;
         int newMonth = month + other.month;
         int newYear = year + other.year;
@@ -96,7 +96,7 @@ public:
         return Date(newDay, newMonth, newYear);
     }
 
-    Date operator-(const Date& other) const {
+    Date operator-(const Date& other) {
         int newDay = day - other.day;
         int newMonth = month - other.month;
         int newYear = year - other.year;
@@ -114,7 +114,7 @@ public:
         return Date(newDay, newMonth, newYear);
     }
 
-    bool operator==(const Date& other) const {
+    bool operator==(const Date& other) {
         return day == other.day && month == other.month && year == other.year;
     }
 };

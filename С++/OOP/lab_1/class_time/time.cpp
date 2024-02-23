@@ -10,7 +10,7 @@ private:
 
 public:
     /// Constructor with parameters
-    Time(int h = 0, int m = 0, int s = 0) : hours(h), minutes(m), seconds(s) {}
+    Time(int h, int m, int s) : hours(h), minutes(m), seconds(s) {}
 
     /// Getters and setters
     int getHours() {

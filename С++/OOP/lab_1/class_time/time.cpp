@@ -13,7 +13,7 @@ public:
     Time(int h = 0, int m = 0, int s = 0) : hours(h), minutes(m), seconds(s) {}
 
     /// Getters and setters
-    int getHours() const {
+    int getHours() {
         return hours;
     }
 
@@ -21,7 +21,7 @@ public:
         hours = h;
     }
 
-    int getMinutes() const {
+    int getMinutes() {
         return minutes;
     }
 
@@ -29,7 +29,7 @@ public:
         minutes = m;
     }
 
-    int getSeconds() const {
+    int getSeconds() {
         return seconds;
     }
 
@@ -87,7 +87,7 @@ public:
         return result;
     }
 
-    bool operator==(const Time& other) const {
+    bool operator==(const Time& other) {
         return (hours == other.hours && minutes == other.minutes && seconds == other.seconds);
     }
 };
@@ -123,7 +123,7 @@ int main() {
     /// Equality Test
     if (time1 == *time2) {
         std::cout << "Time 1 and Time 2 are equal" << std::endl;
-    } 
+    }
     else {
         std::cout << "Time 1 and Time 2 are not equal" << std::endl;
     }
@@ -134,7 +134,7 @@ int main() {
         outputFile << time1.getHours() << " " << time1.getMinutes() << " " << time1.getSeconds() << std::endl;
         outputFile << time2->getHours() << " " << time2->getMinutes() << " " << time2->getSeconds() << std::endl;
         outputFile.close();
-    } 
+    }
     else {
         std::cout << "Unable to open file" << std::endl;
     }
@@ -154,7 +154,7 @@ int main() {
 
         std::cout << "Time1 from file: " << time5.toString() << std::endl;
         std::cout << "Time2 from file: " << time6.toString() << std::endl;
-    } 
+    }
     else {
         std::cout << "Unable to open file" << std::endl;
     }

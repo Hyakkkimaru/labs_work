@@ -21,7 +21,7 @@
 3. `void add_Seconds(int s)` - Method that increases the number of seconds by a given value s. If the total seconds are greater than 60, then one minute is added and 60 is subtracted from the total seconds.
 - Methods for mathematical operations:
 1. `Time operator+(const Time& other)` - Addition operator that returns the new time obtained by adding the current time.
-2. `Time operator-(const Time& other)` - Subtraction operator that returns the new time obtained by subtracting the current time from the current time.
+2. `Time operator-(const Time& other)` - Subtraction operator that returns the new time obtained by subtracting the current time from the other time.
 3. `bool operator==(const Time& other)` - Comparison operator, which compares the current time with a time value, returns true if they are equal and false otherwise.
 - Other methods:
 1. `int toSeconds()` - Method that returns the number of seconds corresponding to the current time value.

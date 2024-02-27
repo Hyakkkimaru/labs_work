@@ -27,3 +27,4 @@
 1. `std::string toString()` - Method that returns a string in the format "дд.мм.гггг".
 - Diagram:
 
+![alt](https://www.planttext.com/api/plantuml/png/ZP6_2i8m4CRtFCLDqbBx0eL21rSdNPmaDg4jD3d9dK8HtzqahM8nWzjzt_qkzoSDiNHyCwCGxIY9u3WO3GzHWf8JL31Ozh51o_r7JLgwHOW2Tf9rfcQz1VCEbkBS4vtcdPooVAafW6PZAGh-7GSra_lGQitEbadH9p_A6exEzCDAfSv-8qeq3Qcu82LwX6JObn9lCXxO3RQB0n2hggAeVGglsab6LsGjMk9uf0qWzze5ECWlgloBgkiqTa4SnLE8HblbF_85)

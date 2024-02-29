@@ -35,7 +35,7 @@ vector<DailyWeatherForecast> getWeatherForecast(string postalCode) {
         CURLcode res = curl_easy_perform(curl);
 
         if (res != CURLE_OK) {
-            cout << "Сталась помилка під час отримання прогнозу погоди: " << curl_easy_strerror(res) << endl;
+            cout << "Произошла ошибка при получении прогноза погоды: " << curl_easy_strerror(res) << endl;
         } else {
             Document document;
             document.Parse(response.c_str());
@@ -61,18 +61,18 @@ vector<DailyWeatherForecast> getWeatherForecast(string postalCode) {
 }
 
 void viewForecastByPostalCode() {
-    cout << "Введіть поштовий індекс: ";
+    cout << "Введите почтовый индекс: ";
     string postalCode;
     cin >> postalCode;
 
     vector<DailyWeatherForecast> forecast = getWeatherForecast(postalCode);
 
     if (forecast.empty()) {
-        cout << "Прогноз погоди недоступний" << endl;
+        cout << "Прогноз погоды недоступен" << endl;
         return;
     }
 
-    cout << "Прогноз погоди для поштового індексу " << postalCode << ":" << endl;
+    cout << "Прогноз погоды для почтового индекса " << postalCode << ":" << endl;
     for (const auto& weatherForecast : forecast) {
         cout << "Дата: " << weatherForecast.date << ", Температура: " << weatherForecast.temperature << "°C" << endl;
     }
@@ -82,29 +82,29 @@ void viewForecastForAllDays() {
     vector<DailyWeatherForecast> forecast = getWeatherForecast("YOUR_POSTAL_CODE"); // Замените YOUR_POSTAL_CODE на ваш почтовый индекс
 
     if (forecast.empty()) {
-        cout << "Прогноз погоди недоступний" << endl;
+        cout << "Прогноз погоды недоступен" << endl;
         return;
     }
 
-    cout << "Прогноз погоди на всі дні:" << endl;
+    cout << "Прогноз погоды на все дни:" << endl;
     for (const auto& weatherForecast : forecast) {
         cout << "Дата: " << weatherForecast.date << ", Температура: " << weatherForecast.temperature << "°C" << endl;
     }
 }
 
 void viewForecastForSpecificDay() {
-    cout << "Введіть дату (у форматі YYYY-MM-DD): ";
+    cout << "Введите дату (в формате YYYY-MM-DD): ";
     string date;
     cin >> date;
 
     vector<DailyWeatherForecast> forecast = getWeatherForecast("YOUR_POSTAL_CODE"); // Замените YOUR_POSTAL_CODE на ваш почтовый индекс
 
     if (forecast.empty()) {
-        cout << "Прогноз погоди недоступний" << endl;
+        cout << "Прогноз погоды недоступен" << endl;
         return;
     }
 
-    cout << "Прогноз погоди на " << date << ":" << endl;
+    cout << "Прогноз погоды на " << date << ":" << endl;
     for (const auto& weatherForecast : forecast) {
         if (weatherForecast.date.find(date) != string::npos) {
             cout << "Температура: " << weatherForecast.temperature << "°C" << endl;
@@ -116,7 +116,7 @@ void displayHighestAndLowestTemperature() {
     vector<DailyWeatherForecast> forecast = getWeatherForecast("YOUR_POSTAL_CODE"); // Замените YOUR_POSTAL_CODE на ваш почтовый индекс
 
     if (forecast.empty()) {
-        cout << "Прогноз погоди недоступний" << endl;
+        cout << "Прогноз погоды недоступен" << endl;
         return;
     }
 
@@ -128,8 +128,8 @@ void displayHighestAndLowestTemperature() {
         lowestTemperature = min(lowestTemperature, weatherForecast.temperature);
     }
 
-    cout << "Найвища температура: " << highestTemperature << "°C" << endl;
-    cout << "Найнижча температура: " << lowestTemperature << "°C" << endl;
+    cout << "Наивысшая температура: " << highestTemperature << "°C" << endl;
+    cout << "Наименьшая температура: " << lowestTemperature << "°C" << endl;
 }
 
 int main() {
@@ -139,7 +139,7 @@ int main() {
         cout << "2. Просмотр прогноза на все 5 дней" << endl;
         cout << "3. Просмотр прогноза на конкретный день" << endl;
         cout << "4. Отображение самой низкой и самой высокой температур из всех" << endl;
-        cout << "0. Вихід" << endl;
+        cout << "0. Выход" << endl;
 
         int choice;
         cin >> choice;
@@ -160,7 +160,7 @@ int main() {
                 displayHighestAndLowestTemperature();
                 break;
             default:
-                cout << "Невірний вибір. Введіть ще раз." << endl;
+                cout << "Неверный выбор. Введите ещё раз." << endl;
                 break;
         }
 

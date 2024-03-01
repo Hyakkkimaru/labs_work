@@ -23,4 +23,4 @@
 2. `loadStateFromFile(const std::string& filename)` - Loads the width and height from a file. If the file cannot be opened, it throws an std::runtime_error exception. It also validates the loaded dimensions using the validateDimensions method.
 - Diagram:
 
-![alt]()
+![alt](https://www.planttext.com/api/plantuml/png/ZP71QiCm38RlUGgVIigs5mWKEXYbnq47FQkr5WiSgyXgUXXxzobE0qbE0vy-Vx_q6--pWkYzYzKrGixk5E26xgToxiqzo6jmZVDylqGiA22rGUVCpikOgfV-wrhU5hL5FGzUlRKBIZh1Ov7Nz5qGrkmJXJfKbCL5dkOcV9mNHGQhP_AJzjnatd5LS2xo3GMKPRUhhvooZc_SEDQ0CfWNvbZC7Y9vKFomLYcJoLPipCmNGuydDUsB3nJnEJIhRvgiGgdTk6_Z2RfbZyZWI-uWtFqx-LjLUqpU_lKF)

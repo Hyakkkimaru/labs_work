@@ -55,7 +55,7 @@ public:
         return (width == other.width && height == other.height);
     }
 
-    void saveStateToFile(const std::string& filename) const {
+    void saveStateToFile(const std::string& filename) {
         std::ofstream file(filename);
         if (file.is_open()) {
             file << width << " " << height << std::endl;

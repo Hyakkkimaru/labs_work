@@ -2,4 +2,4 @@
 ### Description of this repository
 In this lab, we create a class Any using the C++ programming language.
 ### Description of files
-`class_any.cpp` - represents the class Any.
+1. `class_any.cpp` - represents the class Any.

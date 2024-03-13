@@ -5,99 +5,118 @@
 
 class Any {
 private:
-    class Base {
-    public:
-        virtual ~Base() {}
-        virtual Base* clone() const = 0;
-        virtual const std::type_info& type() const = 0;
-    };
+   // Base class for the polymorphic hierarchy
+   class Base {
+   public:
+       // Destructor
+       virtual ~Base() {}
+       // Pure virtual function for cloning the object
+       virtual Base* clone() const = 0;
+       // Pure virtual function for getting the type info
+       virtual const std::type_info& type() const = 0;
+   };
 
-    template<typename T>
-    class Derived : public Base {
-    public:
-        T value;
+   // Template derived class for storing the actual value
+   template<typename T>
+   class Derived : public Base {
+   public:
+       // The stored value
+       T value;
 
-        Derived(const T& value): value(value) {}
+       Derived(const T& value) : value(value) {}
 
-        Base* clone() const override {
-            return new Derived<T>(value);
-        }
+       // Clone function implementation
+       Base* clone() const override {
+           return new Derived<T>(value);
+       }
 
-        const std::type_info& type() const override {
-            return typeid(value);
-        }
-    };
+       // Type info function implementation
+       const std::type_info& type() const override {
+           return typeid(value);
+       }
+   };
 
-    Base* object = nullptr;
+   Base* object; // Pointer to the stored object
 
 public:
-    Any() : object(nullptr) {}
+   // Default constructor
+   Any() : object(nullptr) {}
 
-    template<typename T>
-    Any(const T& value) : object(new Derived<T>(value)) {}
+   // Constructor with a value
+   template<typename T>
+   Any(const T& value) : object(new Derived<T>(value)) {}
 
-    Any(const Any& other) {
-        if (other.object) {
-            object = other.object->clone();
-        }
-    }
+   // Copy constructor
+   Any(const Any& other) {
+       // Clone the object if it's not null
+       if (other.object) {
+           object = other.object->clone();
+       }
+   }
 
-    Any& operator=(const Any& other) {
-        if (&other != this) {
-            delete object;
-            object = other.object ? other.object->clone() : nullptr;
-        }
-        return *this;
-    }
+   // Copy assignment operator
+   Any& operator=(const Any& other) {
+       // Check for self-assignment
+       if (&other != this) {
+           // Delete the current object and set a new one
+           delete object;
+           object = other.object ? other.object->clone() : nullptr;
+       }
+       return *this;
+   }
 
-    ~Any() {
-        delete object;
-    }
+   // Destructor
+   ~Any() {
+       delete object;
+   }
 
-    bool Empty() const {
-        return object == nullptr;
-    }
+   // Check if the object is empty
+   bool Empty() const {
+       return object == nullptr;
+   }
 
-    void Clear() {
-        delete object;
-        object = nullptr;
-    }
+   // Clear the stored object
+   void Clear() {
+       delete object;
+       object = nullptr;
+   }
 
-    const std::type_info& Type() const {
-        return object ? object->type() : typeid(void);
-    }
+   // Get the type info of the stored object
+   const std::type_info& Type() const {
+       return object ? object->type() : typeid(void);
+   }
 
-    template<typename T>
-    T GetValue() const {
-        if (typeid(T) != object->type()) {
-            throw std::bad_cast();
-        }
-        return static_cast<Derived<T>*>(object)->value;
-    }
+   // Get the value as a specific type
+   template<typename T>
+   T GetValue() const {
+       // Check if the stored type matches the requested type
+       if (typeid(T) != object->type()) {
+           throw std::bad_cast();
+       }
+       // Cast and return the value
+       return static_cast<Derived<T>*>(object)->value;
+   }
 };
 
 int main() {
-    Any a = 10;
-    std::cout << a.GetValue<int>() << std::endl;
+   Any a = 10; // int value
+   std::cout << a.GetValue<int>() << std::endl;
 
-    a = std::string("Hello");
-    std::cout << a.GetValue<std::string>() << std::endl;
+   a = std::string("Hello"); // string value
+   std::cout << a.GetValue<std::string>() << std::endl;
 
-    if (!a.Empty()) {
-        std::cout << a.Type().name() << std::endl;
-    }
+   if (!a.Empty()) { // Check Any object is not empty
+       std::cout << a.Type().name() << std::endl; // stored type name
+   }
 
-    try 
-    {
-        std::cout << a.GetValue<int>() << std::endl;
-    } 
-    catch (const std::bad_cast& e) 
-    {
-        std::cout << "Bad cast detected" << std::endl;
-    }
+   try {
+       std::cout << a.GetValue<int>() << std::endl; // Try to get an int value
+   } catch (const std::bad_cast& e) { // Catch bad_cast exception
+       std::cout << "Bad cast detected" << std::endl;
+   }
 
-    a.Clear();
-    std::cout << std::boolalpha << a.Empty() << std::endl;
+   a.Clear();
+   std::cout << std::boolalpha << a.Empty() << std::endl; // Print if the Any object is empty
 
-    return 0;
+   return 0;
 }

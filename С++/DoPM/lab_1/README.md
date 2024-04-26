@@ -1,6 +1,6 @@
 ## Laboratory work in C++
 ### Description of this repository:
-In this lab, we we received the weather forecast for 5 days from the site openweathermap.com in JSON format.
+In this lab, we received the weather forecast for 5 days from the site openweathermap.com in JSON format.
 ### Libraries used:
 - rapidjson
 - libcurl

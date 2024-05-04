@@ -1,99 +1,113 @@
 #include <iostream>
 #include <string>
-#include <vector>
+#include <stack>
 
-class Editor {
+class Command {
+public:
+    virtual void Execute() = 0;
+    virtual void Undo() = 0;
+};
+
+class TypeCommand : public Command {
 private:
-    std::string text;
-    int cursorPosition;
-    char deletedChar;
-    std::vector<std::string> history;
-    std::vector<std::string> redoHistory;
+    std::string& buffer;
+    char ch;
+    size_t pos;
 
 public:
-    Editor() : cursorPosition(0), deletedChar(' '), history(), redoHistory() {}
+    TypeCommand(std::string& buf, char c, size_t p) : buffer(buf), ch(c), pos(p) {}
 
-    void Type(char c) {
-        text.insert(cursorPosition, 1, c);
-        cursorPosition++;
-        history.push_back("Type");
+    void Execute() override {
+        buffer.insert(pos, 1, ch);
+    }
+
+    void Undo() override {
+        buffer.erase(pos, 1);
+    }
+};
+
+class DeleteCommand : public Command {
+private:
+    std::string& buffer;
+    size_t pos;
+    char deletedChar;
+
+public:
+    DeleteCommand(std::string& buf, size_t p, char ch) : buffer(buf), pos(p), deletedChar(ch) {}
+
+    void Execute() override {
+        deletedChar = buffer[pos - 1];
+        buffer.erase(pos - 1, 1);
+    }
+
+    void Undo() override {
+        buffer.insert(pos - 1, 1, deletedChar);
+    }
+};
+
+class TextEditor {
+private:
+    std::string buffer;
+    size_t cursorPos;
+    std::stack<Command*> undoStack;
+    std::stack<Command*> redoStack;
+
+public:
+    TextEditor() : cursorPos(0) {}
+
+    void Type(char ch) {
+        Command* cmd = new TypeCommand(buffer, ch, cursorPos);
+        cmd->Execute();
+        undoStack.push(cmd);
+        cursorPos++;
     }
 
     void ShiftLeft() {
-        if (cursorPosition > 0) {
-            cursorPosition--;
-            history.push_back("ShiftLeft");
+        if (cursorPos > 0) {
+            cursorPos--;
         }
     }
 
     void ShiftRight() {
-        if (cursorPosition < text.size()) {
-            cursorPosition++;
-            history.push_back("ShiftRight");
+        if (cursorPos < buffer.size()) {
+            cursorPos++;
         }
     }
 
     void Backspace() {
-        if (cursorPosition > 0) {
-            deletedChar = text[cursorPosition - 1];
-            text.erase(cursorPosition - 1, 1);
-            cursorPosition--;
-            history.push_back("Backspace");
+        if (cursorPos > 0) {
+            Command* cmd = new DeleteCommand(buffer, cursorPos, buffer[cursorPos - 1]);
+            cmd->Execute();
+            undoStack.push(cmd);
+            cursorPos--;
         }
     }
 
     void Undo() {
-        if (!history.empty()) {
-            if (history.back() == "Type") {
-                text.erase(cursorPosition - 1, 1);
-                cursorPosition--;
-            }
-            else if (history.back() == "ShiftLeft") {
-                cursorPosition++;
-            }
-            else if (history.back() == "ShiftRight") {
-                cursorPosition--;
-            }
-            else if (history.back() == "Backspace") {
-                text.insert(cursorPosition, 1, deletedChar);
-                cursorPosition++;
-            }
-            redoHistory.push_back(history.back());
-            history.pop_back();
+        if (!undoStack.empty()) {
+            Command* cmd = undoStack.top();
+            cmd->Undo();
+            redoStack.push(cmd);
+            undoStack.pop();
         }
     }
 
     void Redo() {
-        if (!redoHistory.empty()) {
-            if (redoHistory.back() == "Type") {
-                text.insert(cursorPosition, 1, ' ');
-                cursorPosition++;
-            }
-            else if (redoHistory.back() == "ShiftLeft") {
-                cursorPosition--;
-            }
-            else if (redoHistory.back() == "ShiftRight") {
-                cursorPosition++;
-            }
-            else if (redoHistory.back() == "Backspace") {
-                text.erase(cursorPosition - 1, 1);
-                cursorPosition--;
-            }
-            history.push_back(redoHistory.back());
-            redoHistory.pop_back();
+        if (!redoStack.empty()) {
+            Command* cmd = redoStack.top();
+            cmd->Execute();
+            undoStack.push(cmd);
+            redoStack.pop();
         }
     }
 
     const std::string& GetText() const {
-        if (text.empty()) {
-            throw std::runtime_error("Error: Text is empty.");
-        }
-        return text;
+        return buffer;
     }
 };
 
 int main() {
-    Editor editor;
+    TextEditor editor;
     editor.Type('I');
     editor.Type('T');
     editor.Type('c');
@@ -118,4 +132,6 @@ int main() {
     editor.Redo();
 
     std::cout << "Text after redo: " << editor.GetText() << std::endl;
+
+    return 0;
 }

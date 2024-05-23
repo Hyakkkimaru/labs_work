@@ -73,13 +73,13 @@ class Program
             Console.WriteLine($"Tittle: {book.Title}, Author Last Name: {book.AuthorLastName}, Price: {book.Price}, Publication Date: {book.PublicationDate}, Publishing house: {book.Publisher}, Inventory Numbers: {string.Join(", ", book.InventoryNumbers)}");
         }
 
-        Console.WriteLine("а) All products:");
+        Console.WriteLine("\nа) All products:");
         foreach (var product in products)
         {
             Console.WriteLine($"Name: {product.Name}, Price: {product.Price}, Quantity: {product.Quantity}, Arrival Dates: {string.Join(", ", product.ArrivalDates)}, Manufacturer: {product.Manufacturer}");
         }
 
-        Console.WriteLine("a) All cinemas:");
+        Console.WriteLine("\na) All cinemas:");
         foreach (var cinema in cinemas)
         {
             Console.WriteLine($"Name: {cinema.Name}, Roominess: {cinema.Roominess}, Construction date: {cinema.ConstructionDate}, Rank: {cinema.Rank}");
